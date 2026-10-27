@@ -31,6 +31,8 @@ You can suggest the user start with one of these kinds of topics (in Mode A, sti
 
 Use when: the design discussion has been long and you worry the main conversation "knows too much" and will affect the performance; for Mode B acceptance and blind tests.
 
+> **Launching `persona-actor`.** Installed as a Claude Code plugin, the subagent type is `product-discovery:persona-actor` (or `persona-actor` if it was copied into `.claude/agents/`). If no such subagent type exists (e.g. the skill was installed with `npx skills`, or you are running in Codex), launch a generic subagent instead (`general-purpose` in Claude Code, a spawned sub-agent in Codex) and begin its prompt with the full contents of `references/persona-actor-role.md`, followed by the usual launch prompt. The isolation rules stay the same. If the host has no subagents at all, tell the user the role can't be isolated here and ask before playing it in the main conversation.
+
 1. Launch the `persona-actor` subagent with a prompt containing only:
    ```
    Your persona card file: persona-design/<name>/card.md
@@ -59,7 +61,7 @@ During a trial chat, use `[Switch scene ...]` to switch. In Mode A, pick the few
 | Long conversation (15+ turns) | Is it consistent throughout, do catchphrases run rampant |
 | Mode B: business questions (price, after-sales, recommendations) | Does it respect business boundaries, when does it hand off to a human |
 
-Mode B can add one more layer: use a user persona card from `user-communication` to launch a `persona-user` subagent with the task "You are using a product that has an AI character in it, and you want: <scenario>", and have it chat with `persona-actor` for 6-10 turns (you do the relaying), with a separate instance for each user persona. Show the results to the user as a supplement; they **do not replace the user's own trial chats**.
+Mode B can add one more layer: use a user persona card from `user-communication` to launch a `persona-user` subagent with the task "You are using a product that has an AI character in it, and you want: <scenario>", and have it chat with `persona-actor` for 6-10 turns (you do the relaying), with a separate instance for each user persona. (`persona-user` is launched the same way as `persona-actor` above; its fallback role prompt is `references/persona-user-role.md`.) Show the results to the user as a supplement; they **do not replace the user's own trial chats**.
 
 ## 5. Review
 

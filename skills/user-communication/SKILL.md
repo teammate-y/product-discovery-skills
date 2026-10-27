@@ -165,6 +165,8 @@ Talk track requirements: use the users' own language (from verbatim interview qu
 
 Once the personas and interview guide are ready, launch **one independent `persona-user` subagent per persona** to run the interview. The purpose: each simulated user knows only their own persona and is not influenced by other personas, product research conclusions, or the main conversation context.
 
+> **Launching `persona-user`.** Installed as a Claude Code plugin, the subagent type is `product-discovery:persona-user` (or `persona-user` if it was copied into `.claude/agents/`). If no such subagent type exists (e.g. the skill was installed with `npx skills`, or you are running in Codex), launch a generic subagent instead (`general-purpose` in Claude Code, a spawned sub-agent in Codex) and begin its prompt with the full contents of `references/persona-user-role.md`, followed by the usual launch prompt. The isolation rules stay the same. If the host has no subagents at all, tell the user the role can't be isolated here and ask before playing it in the main conversation.
+
 #### 5.1 Isolation rules (must follow)
 - **One persona = one subagent instance.** Never let one subagent play multiple users.
 - When launching a subagent, the prompt **contains only**: the persona file path + the interview questions (+ a neutral description of the product for concept tests). Do not pass in the research report, the list of hypotheses, other personas, or "what we hope to hear".

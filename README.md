@@ -1,15 +1,15 @@
-# Product Discovery Skills for Claude Code
+# Product Discovery Skills for Claude Code & Codex
 
-A set of four Claude Code skills and two subagents that take you from **"we have a vague product idea"** to **"we know the market, we know our users, and we have working AI agents and characters to build with."**
+A plugin with four agent skills and two subagents, installable in Claude Code, Codex, or any agent supported by [`npx skills`](https://github.com/vercel-labs/skills), that take you from **"we have a vague product idea"** to **"we know the market, we know our users, and we have working AI agents and characters to build with."**
 
 | Piece | Type | What it does |
 |---|---|---|
-| [`product-research`](.claude/skills/product-research/SKILL.md) | Skill | Market sizing, competitor analysis, North Star metric breakdown, Wei-Zhu business model analysis, product essence, channel analysis → a structured research report |
-| [`user-communication`](.claude/skills/user-communication/SKILL.md) | Skill | Target user segments, personas, tag system, interview guides, surveys, talk tracks, **simulated interviews**, and insight synthesis |
-| [`persona-builder`](.claude/skills/persona-builder/SKILL.md) | Skill | Design an AI character (brand IP, companion, practice partner, game NPC) by *chatting with it* and tuning it until it feels right |
-| [`agent-builder`](.claude/skills/agent-builder/SKILL.md) | Skill | Interview you, write an agent spec, generate the agent (subagent / skill / system prompt / SDK code / Coze·Dify·GPTs config), trial-run it, iterate |
-| [`persona-user`](.claude/agents/persona-user.md) | Subagent | Plays one target user from a persona card. Used by `user-communication` for interviews and live chats |
-| [`persona-actor`](.claude/agents/persona-actor.md) | Subagent | Plays one AI character from a persona card, in an isolated context. Used by `persona-builder` |
+| [`product-research`](skills/product-research/SKILL.md) | Skill | Market sizing, competitor analysis, North Star metric breakdown, Wei-Zhu business model analysis, product essence, channel analysis → a structured research report |
+| [`user-communication`](skills/user-communication/SKILL.md) | Skill | Target user segments, personas, tag system, interview guides, surveys, talk tracks, **simulated interviews**, and insight synthesis |
+| [`persona-builder`](skills/persona-builder/SKILL.md) | Skill | Design an AI character (brand IP, companion, practice partner, game NPC) by *chatting with it* and tuning it until it feels right |
+| [`agent-builder`](skills/agent-builder/SKILL.md) | Skill | Interview you, write an agent spec, generate the agent (subagent / skill / system prompt / SDK code / Coze·Dify·GPTs config), trial-run it, iterate |
+| [`persona-user`](agents/persona-user.md) | Subagent | Plays one target user from a persona card. Used by `user-communication` for interviews and live chats |
+| [`persona-actor`](agents/persona-actor.md) | Subagent | Plays one AI character from a persona card, in an isolated context. Used by `persona-builder` |
 
 ## How the pieces fit together
 
@@ -42,26 +42,69 @@ Each skill works on its own, and they also chain together:
 
 ## Install
 
-Skills and subagents are plain Markdown. Copy them into a Claude Code project or your user directory:
+### Claude Code (plugin, recommended)
 
-```bash
-git clone https://github.com/<your-username>/product-discovery-skills.git
-cd product-discovery-skills
+Inside Claude Code:
 
-# Per project
-mkdir -p /path/to/your/project/.claude/{skills,agents}
-cp -R .claude/skills/* /path/to/your/project/.claude/skills/
-cp -R .claude/agents/* /path/to/your/project/.claude/agents/
-
-# Or globally (available in every project)
-mkdir -p ~/.claude/{skills,agents}
-cp -R .claude/skills/* ~/.claude/skills/
-cp -R .claude/agents/* ~/.claude/agents/
+```
+/plugin marketplace add teammate-y/product-discovery-skills
+/plugin install product-discovery@product-discovery-skills
 ```
 
-Restart Claude Code. The skills trigger automatically from natural language (see each skill's `description`), or you can invoke one directly, e.g. `/product-research`.
+Or in one step on recent Claude Code versions:
 
-> **Install all of it together.** `user-communication` and `agent-builder` use the `persona-user` subagent, and `persona-builder` uses `persona-actor` for isolated conversations.
+```
+/plugin install product-discovery --marketplace teammate-y/product-discovery-skills
+```
+
+This installs all four skills plus the `persona-user` and `persona-actor` subagents (namespaced as `product-discovery:persona-user` / `product-discovery:persona-actor`). Invoke a skill directly with e.g. `/product-discovery:product-research`, or just describe what you want.
+
+### Codex (plugin)
+
+```bash
+codex plugin marketplace add teammate-y/product-discovery-skills
+```
+
+Then open the Plugins directory in Codex, choose **Product Discovery Skills**, and install **product-discovery**. Codex plugins carry skills only; where a skill needs `persona-user` / `persona-actor`, it spawns a generic sub-agent with the bundled role prompt (`references/*-role.md`) instead.
+
+### Any agent via `npx skills`
+
+```bash
+# Pick skills and target agents interactively
+npx skills add teammate-y/product-discovery-skills
+
+# All skills, globally, for Claude Code and Codex
+npx skills add teammate-y/product-discovery-skills --skill '*' -a claude-code -a codex -g
+
+# A single skill
+npx skills add teammate-y/product-discovery-skills --skill product-research
+```
+
+`npx skills` installs skills only, not subagents. The skills fall back to a generic subagent with the bundled role prompt, so they still work. For Claude Code you can also install the subagents yourself:
+
+```bash
+mkdir -p ~/.claude/agents
+curl -fsSL -o ~/.claude/agents/persona-user.md  https://raw.githubusercontent.com/teammate-y/product-discovery-skills/main/agents/persona-user.md
+curl -fsSL -o ~/.claude/agents/persona-actor.md https://raw.githubusercontent.com/teammate-y/product-discovery-skills/main/agents/persona-actor.md
+```
+
+### Manual copy
+
+```bash
+git clone https://github.com/teammate-y/product-discovery-skills.git
+cp -R product-discovery-skills/skills/* ~/.claude/skills/
+cp -R product-discovery-skills/agents/* ~/.claude/agents/
+```
+
+> **Install it all together.** `user-communication` and `agent-builder` use `persona-user`, and `persona-builder` uses `persona-actor`.
+
+### Local development
+
+```bash
+claude --plugin-dir .          # load this checkout as a plugin
+claude plugin validate .       # validate manifests
+npx skills add . --list        # check npx skills discovery
+```
 
 ## Demos
 
@@ -191,16 +234,25 @@ agent-design/meeting-actions/
 ## Repository layout
 
 ```
-.claude/
-├── agents/
-│   ├── persona-actor.md
-│   └── persona-user.md
-└── skills/
-    ├── agent-builder/       (SKILL.md + references/)
-    ├── persona-builder/     (SKILL.md + references/)
-    ├── product-research/    (SKILL.md + references/)
-    └── user-communication/  (SKILL.md + references/)
+.claude-plugin/
+├── plugin.json            Claude Code plugin manifest
+└── marketplace.json       Claude Code marketplace (also read by npx skills)
+.codex-plugin/plugin.json  Codex plugin manifest
+.agents/plugins/
+└── marketplace.json       Codex marketplace
+plugin.json                Portable plugin manifest (Codex)
+agents/
+├── persona-actor.md
+└── persona-user.md
+skills/
+├── agent-builder/         (SKILL.md + references/)
+├── persona-builder/       (SKILL.md + references/)
+├── product-research/      (SKILL.md + references/)
+└── user-communication/    (SKILL.md + references/)
+scripts/sync-roles.sh      Copies agents/*.md into skills/*/references/*-role.md
 ```
+
+`skills/*/references/*-role.md` are generated copies of the subagent prompts, so each skill works where the subagents aren't installed. After editing anything in `agents/`, run `scripts/sync-roles.sh`. When releasing, bump `version` in all four manifests together.
 
 ## Notes
 
@@ -208,7 +260,7 @@ agent-design/meeting-actions/
 - Simulated interviews are a way to sharpen hypotheses and rehearse. They do **not** replace talking to real users, and the skills label insights as *simulated* vs. *real*.
 - `persona-builder` will not build a persona that claims to be a real living person, and in product mode the persona answers honestly when a user sincerely asks whether it is an AI.
 - Control strings (`[Pause]`, `##`, `Mode: chat`) are shared between the skills and the subagents. If you rename one, rename it on both sides.
-- The skills and subagents need no extra dependencies, just Claude Code.
+- The skills and subagents need no extra dependencies, just Claude Code or Codex.
 
 ## License
 

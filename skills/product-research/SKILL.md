@@ -1,6 +1,6 @@
 ---
 name: product-research
-description: Product research and business understanding. Use for systematic research before launching a new business or product: market research (size, trends, PEST), competitive analysis, metric breakdown (North Star metric decomposition), business model analysis (Wei-Zhu business model, 魏朱六要素 / six-element model), product research (needs met, user groups, historical related products, differentiation and advantages, essence), and market channel analysis (channel selection and channel user characteristics). Use when the user mentions "product research", "market research", "competitor analysis", "business model", "Wei-Zhu model", "new business research", "metric breakdown", or "channel analysis".
+description: 'Product research and business understanding. Use for systematic research before launching a new business or product: market research (size, trends, PEST), competitive analysis, metric breakdown (North Star metric decomposition), business model analysis (Wei-Zhu business model, 魏朱六要素 / six-element model), product research (needs met, user groups, historical related products, differentiation and advantages, essence), and market channel analysis (channel selection and channel user characteristics). Use when the user mentions "product research", "market research", "competitor analysis", "business model", "Wei-Zhu model", "new business research", "metric breakdown", or "channel analysis".'
 ---
 
 # Product Research

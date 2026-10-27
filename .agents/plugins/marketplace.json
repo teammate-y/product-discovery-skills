@@ -1,0 +1,12 @@
+{
+  "name": "product-discovery-skills",
+  "interface": { "displayName": "Product Discovery Skills" },
+  "plugins": [
+    {
+      "name": "product-discovery",
+      "source": { "source": "local", "path": "./" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "product-discovery-skills",
+  "owner": { "name": "teammate-y" },
+  "metadata": {
+    "description": "Product discovery skills for Claude Code and Codex",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "product-discovery",
+      "source": "./",
+      "description": "Product discovery toolkit: market & business research, user personas and simulated interviews, AI persona design, and custom agent building.",
+      "version": "1.0.0",
+      "license": "MIT",
+      "category": "productivity",
+      "skills": [
+        "./skills/product-research",
+        "./skills/user-communication",
+        "./skills/persona-builder",
+        "./skills/agent-builder"
+      ]
+    }
+  ]
+}

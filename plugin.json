@@ -1,0 +1,16 @@
+{
+  "name": "product-discovery",
+  "version": "1.0.0",
+  "description": "Product discovery toolkit: market & business research, user personas and simulated interviews, AI persona design, and custom agent building.",
+  "author": { "name": "teammate-y" },
+  "homepage": "https://github.com/teammate-y/product-discovery-skills",
+  "repository": "https://github.com/teammate-y/product-discovery-skills",
+  "license": "MIT",
+  "keywords": ["product-research", "user-research", "personas", "user-interviews", "agent-builder"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Product Discovery",
+    "shortDescription": "Market research, user personas, simulated interviews, AI personas and agent building",
+    "category": "Productivity"
+  }
+}

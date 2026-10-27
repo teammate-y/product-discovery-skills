@@ -47,6 +47,8 @@ Isolation rule: do not pass in the spec, expected behavior, pass criteria, or ot
 A subagent newly written into `.claude/agents/` may need a restart before it can be called via `subagent_type`; until then, trial-run it as above by having a `general-purpose` agent read the file (ignore the frontmatter and treat the body as the system instructions).
 
 ### Multi-turn conversational agents (common in Mode B)
+> **Launching `persona-user`.** Installed as a Claude Code plugin, the subagent type is `product-discovery:persona-user` (or `persona-user` if it was copied into `.claude/agents/`). If no such subagent type exists (e.g. the skill was installed with `npx skills`, or you are running in Codex), launch a generic subagent instead (`general-purpose` in Claude Code, a spawned sub-agent in Codex) and begin its prompt with the full contents of `references/persona-user-role.md`, followed by the usual launch prompt. The isolation rules stay the same. If the host has no subagents at all, tell the user the role can't be isolated here and ask before playing it in the main conversation.
+
 1. Launch a `general-purpose` subagent as the agent under test (same template as above, with the first message being the end user's opening).
 2. Launch a `persona-user` subagent, with the persona card from `user-research/<product>/personas/`, and the task description "You are using a product's AI assistant and want to solve: <scenario>".
 3. Relay messages between the two using SendMessage (before first use, load it with ToolSearch `select:SendMessage`), run 3–6 rounds, and record the conversation verbatim.
