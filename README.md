@@ -1,4 +1,4 @@
-# Product Discovery Skills for Claude Code & Codex
+# Product Discovery Skills 
 
 A plugin with four agent skills and two subagents, installable in Claude Code, Codex, or any agent supported by [`npx skills`](https://github.com/vercel-labs/skills), that take you from **"we have a vague product idea"** to **"we know the market, we know our users, and we have working AI agents and characters to build with."**
 
